@@ -1,17 +1,9 @@
 server:
-  port: 5000
+  port: 5100
 
 spring:
   application:
-    name: api-gateway
-
-  cloud:
-    gateway:
-      routes:
-      - id: auth_route
-        uri: service://auth-server
-        predicates:
-        - Path=/auth/**
+    name: auth-server
 
 eureka:
   client:
@@ -22,12 +14,13 @@ eureka:
     healthcheck:
       enabled: true
 
+
 management:
   endpoints:
     enabled-by-default: on
     web:
       exposure:
-        include: health,info,prometheus,metrics,env,threaddump,loggers,configprops,hystrix.stream
+        include: health,info,prometheus,metrics,env,threaddump,loggers,configprops
 
   endpoint:
     health:

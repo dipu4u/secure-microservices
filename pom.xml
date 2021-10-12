@@ -18,7 +18,7 @@
     <modules>
         <module>api-gateway</module>
         <module>service-registry</module>
-        <module>authorization-server</module>
+        <module>auth-server</module>
     </modules>
 
     <build>

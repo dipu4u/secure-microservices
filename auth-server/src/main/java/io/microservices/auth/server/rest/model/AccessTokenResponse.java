@@ -1,4 +1,4 @@
-package io.microservices.apigateway.web.model;
+package io.microservices.auth.server.rest.model;
 
 public class AccessTokenResponse {
 
