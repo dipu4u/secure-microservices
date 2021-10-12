@@ -14,7 +14,7 @@
         </layout>
     </appender>
 
-    <logger name="io.microservices" level="info" additivity="false">
+    <logger name="io.microservices" level="debug" additivity="false">
         <appender-ref ref="Console" />
     </logger>
 
