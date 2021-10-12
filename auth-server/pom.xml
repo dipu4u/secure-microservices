@@ -10,16 +10,30 @@
     </parent>
 
     <groupId>io.microservices</groupId>
-    <artifactId>authorization-server</artifactId>
+    <artifactId>auth-server</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <name>Authorization Server</name>
-    <description>Authorization Server</description>
+    <name>Auth Server</name>
+    <description>Auth Server</description>
 
     <properties>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aspects</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -31,6 +45,10 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
         <dependency>

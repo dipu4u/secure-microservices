@@ -1,6 +1,6 @@
-package io.microservices.apigateway.web.resource;
+package io.microservices.auth.server.rest.resource;
 
-import io.microservices.apigateway.web.model.AccessTokenResponse;
+import io.microservices.auth.server.rest.model.AccessTokenResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/token")
+@RequestMapping(path = "/token")
 public class AccessTokenController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccessTokenController.class);
