@@ -1,0 +1,40 @@
+server:
+  port: 5000
+
+spring:
+  application:
+    name: api-gateway
+
+eureka:
+  client:
+    enabled: true
+    service-url:
+      default-zone: http://localhost:8761
+    register-with-eureka: true
+    healthcheck:
+      enabled: true
+
+  instance:
+    prefer-ip-address: true
+
+
+management:
+  endpoints:
+    enabled-by-default: on
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,env,threaddump,loggers,configprops,hystrix.stream
+
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: on
+
+  metrics:
+    export:
+      prometheus:
+        enabled: on
+      jmx:
+        enabled: on
+        domain: ${spring.application.name}
