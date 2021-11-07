@@ -20,3 +20,9 @@ Here, I have uses Apache Maven as build tool which supports profiling, multi mod
 <br/>
 \# cd secure-microservices <br/>
 \# cd mvn clean install
+
+##### Create Private key to sign JWT token
+
+\# openssl genrsa -out private_token.key 2048<br/>
+\# openssl rsa -in token.key -pubout -out public_token.key<br/>
+\# openssl pkcs8 -in private_token.key -out token-private.p8 -outform der -nocrypt -topk8
