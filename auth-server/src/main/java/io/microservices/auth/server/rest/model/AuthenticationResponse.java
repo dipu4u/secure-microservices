@@ -1,10 +1,10 @@
 package io.microservices.auth.server.rest.model;
 
-public class AccessTokenResponse {
+public class AuthenticationResponse {
 
     private final String accessToken;
 
-    public AccessTokenResponse(String accessToken) {
+    public AuthenticationResponse(String accessToken) {
         this.accessToken = accessToken;
     }
 

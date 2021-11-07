@@ -6,8 +6,8 @@ server:
   port: 8761
 
 eureka:
-  server:
-    eviction-interval-timer-in-ms: 1000
+#  server:
+#    eviction-interval-timer-in-ms: 30000
   client:
     eureka-server-connect-timeout-seconds: 10
     enabled: true

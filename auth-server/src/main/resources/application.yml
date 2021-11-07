@@ -1,6 +1,16 @@
 server:
   port: 5100
 
+application:
+  user-encryption:
+    password-salt: 20211029
+    iterations: 200000
+    hash-width: 512
+  token-encryption:
+    scope-claim-name: authority
+    expiry-minutes: 60
+    sign-token-key-path: /Users/dipeshm/workspace/external_source/keys/token-private.p8
+
 spring:
   application:
     name: auth-server

@@ -9,15 +9,20 @@ spring:
       enabled: true
 
     gateway:
+      default-filters:
+        - TrackRequest
       routes:
-      - id: auth-route
+      - id: oauth-route
         uri: lb://auth-server/
         predicates:
-        - Path=/auth/**
+          - Path=/oauth/**
+
+      - id: token-route
+        uri: lb://auth-server/
+        predicates:
+          - Path=/token
         filters:
-        - RewritePath=/auth/(?<segment>.*), /$\{segment}
-
-
+          - TokenAuth
 
 #        - name: Hystrix
 #          args:

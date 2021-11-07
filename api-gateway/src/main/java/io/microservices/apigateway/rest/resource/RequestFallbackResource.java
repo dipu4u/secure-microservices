@@ -1,4 +1,4 @@
-package io.microservices.apigateway.rest.controller;
+package io.microservices.apigateway.rest.resource;
 
 import io.microservices.apigateway.rest.model.ServiceFailureResponse;
 import org.slf4j.Logger;
