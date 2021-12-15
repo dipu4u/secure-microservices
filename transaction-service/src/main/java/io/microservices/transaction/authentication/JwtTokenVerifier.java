@@ -1,4 +1,4 @@
-package io.microservices.apigateway.token;
+package io.microservices.transaction.authentication;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -7,21 +7,29 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import io.microservices.apigateway.configuration.ApplicationProperties;
-import io.microservices.apigateway.exception.InvalidTokenException;
-import io.microservices.apigateway.rest.filter.TokenAuthGatewayFilterFactory;
-import io.microservices.apigateway.utils.EncryptionUtils;
+import io.microservices.transaction.configuration.ApplicationProperties;
+import io.microservices.transaction.utils.EncryptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Service
+@Component
 public class JwtTokenVerifier {
 
     private static final Logger LOG = LoggerFactory.getLogger(JwtTokenVerifier.class);
@@ -35,19 +43,25 @@ public class JwtTokenVerifier {
         this.tokenSignKey = EncryptionUtils.readPublicKey(applicationProperties.getTokenEncryption().getSignTokenKeyPath());
     }
 
-    public boolean isValidToken(String token) {
+    public Authentication getAuthentication(String token) {
         try {
             Jws<Claims> jws = parse(token);
-            if (jws.getBody().getExpiration().after(new Date()))
-                return true;
+            if (jws.getBody().getExpiration().after(new Date())) {
+                return new UsernamePasswordAuthenticationToken(jws.getBody().getSubject(), null, getAuthorities(jws));
+            }
         } catch(ExpiredJwtException e) {
             LOG.error("Expired token {}", e.getMessage(), e);
         } catch(UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
             LOG.error("Invalid token {}", e.getMessage(), e);
         } catch(Exception e) {
-            LOG.error("Unexpected error during parse token. {}", e.getMessage(), e);
+            LOG.error("Unexpected error during parse token {}", e.getMessage(), e);
         }
-        return false;
+        return null;
+    }
+
+    private List<GrantedAuthority> getAuthorities(Jws<Claims> jws) {
+        String authority = jws.getBody().get(applicationProperties.getTokenEncryption().getScopeClaimName(), String.class);
+        return Arrays.stream(authority.split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     private Jws<Claims> parse(String token) {

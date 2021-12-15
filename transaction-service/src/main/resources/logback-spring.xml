@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS}|%level|%class{0}.%M|%msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <logger name="io.microservices" level="info" additivity="false">
+        <appender-ref ref="Console" />
+    </logger>
+
+    <logger name="org.springframework" level="info" additivity="false">
+        <appender-ref ref="Console" />
+    </logger>
+
+    <root level="error">
+        <appender-ref ref="Console" />
+    </root>
+
+</configuration>

@@ -1,6 +1,12 @@
 server:
   port: 5000
 
+application:
+  token-encryption:
+    scope-claim-name: authority
+    expiry-minutes: 60
+    sign-token-key-path: /Users/dipeshm/workspace/external_source/keys/latest_public.pem
+
 spring:
   application:
     name: api-gateway
@@ -17,16 +23,12 @@ spring:
         predicates:
           - Path=/oauth/**
 
-      - id: token-route
-        uri: lb://auth-server/
+      - id: transaction-route
+        uri: lb://transaction-service/
         predicates:
-          - Path=/token
+          - Path=/transactions/**
         filters:
           - TokenAuth
-
-#        - name: Hystrix
-#          args:
-#            fallbackUri: forward:/fallback
 
 eureka:
   client:
