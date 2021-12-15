@@ -1,4 +1,4 @@
-package io.microservices.auth.server.utils;
+package io.microservices.apigateway.utils;
 
 import org.bouncycastle.util.io.pem.PemReader;
 
@@ -7,19 +7,20 @@ import java.io.IOException;
 import java.io.Reader;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 public final class EncryptionUtils {
 
-    public static PrivateKey readPrivateKey(String keyPath)
+    public static PublicKey readPublicKey(String keyPath)
             throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
         final KeyFactory factory = KeyFactory.getInstance("RSA");
         try (Reader reader = new FileReader(keyPath);
              PemReader pemReader = new PemReader(reader)) {
-            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(pemReader.readPemObject().getContent());
-            return factory.generatePrivate(spec);
+            X509EncodedKeySpec spec = new X509EncodedKeySpec(pemReader.readPemObject().getContent());
+            return factory.generatePublic(spec);
         }
     }
+
 }

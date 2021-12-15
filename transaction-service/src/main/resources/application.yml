@@ -1,19 +1,15 @@
 server:
-  port: 5100
+  port: 5200
 
 application:
-  user-encryption:
-    password-salt: 20211029
-    iterations: 200000
-    hash-width: 512
   token-encryption:
     scope-claim-name: authority
     expiry-minutes: 60
-    sign-token-key-path: /Users/dipeshm/workspace/external_source/keys/latestpriv8.pem
+    sign-token-key-path: /Users/dipeshm/workspace/external_source/keys/latest_public.pem
 
 spring:
   application:
-    name: auth-server
+    name: transaction-service
 
 eureka:
   client:
@@ -26,6 +22,7 @@ eureka:
 
   instance:
     prefer-ip-address: true
+
 
 management:
   endpoints:
