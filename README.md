@@ -22,6 +22,6 @@ Here, I have uses Apache Maven as build tool which supports profiling, multi mod
 \# cd mvn clean install
 
 ##### Create Private key to sign JWT token
-\# openssl genrsa -out latestpem.pem 2048
-\# openssl pkcs8 -topk8 -inform PEM -outform PEM -in latestpem.pem -out latestpriv8.pem -nocrypt
-\# openssl rsa -pubout -in latestpriv8.pem -out latest_public.pem
+\# openssl genrsa -out latestpem.pem 2048<br/>
+\# openssl pkcs8 -topk8 -inform PEM -outform PEM -in latestpem.pem -out latestpriv8.pem -nocrypt<br/>
+\# openssl rsa -pubout -in latestpriv8.pem -out latest_public.pem<br/>
